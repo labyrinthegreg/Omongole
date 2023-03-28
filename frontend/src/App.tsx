@@ -1,4 +1,3 @@
-import './App.css'
 import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'peerjs';
 import io from 'socket.io-client';
@@ -43,13 +42,13 @@ const Input = styled.input`
 const socket = io('http://localhost:3000');
 
 function App() {
-const currentUserVideoRef = useRef<HTMLVideoElement>(null);
+  const currentUserVideoRef = useRef<HTMLVideoElement>(null);
   const remoteUserVideoRef = useRef<HTMLVideoElement>(null);
 
   const peer = new Peer()
 
-  peer.on('open', () => {
-    socket.emit('join-room', socket.id);
+  peer.on('open', (id) => {
+    socket.emit('join-room', socket.id, id);
   })
   
   useEffect(() => {
@@ -61,14 +60,15 @@ const currentUserVideoRef = useRef<HTMLVideoElement>(null);
       }
       peer.on('call', (call) => {
         call.answer(stream);
+        
         call.on('stream', (remoteStream: MediaStream) => {
           connectToNewUser(remoteStream);
         });
       });
 
-      socket.on('user-connected', (userId: string) => { 
+      socket.on('user-connected', (userId: string, peerId: string) => { 
         console.log("userId: ", userId);
-        const call = peer.call(peer.id, stream)
+        const call = peer.call(peerId, stream)
         
         call.on('stream', (remoteStream: MediaStream) => {
           connectToNewUser(remoteStream);
@@ -79,9 +79,8 @@ const currentUserVideoRef = useRef<HTMLVideoElement>(null);
   }, []);
 
   function connectToNewUser(stream: MediaStream) {
-    console.log(remoteUserVideoRef.current);
-    
-  }
+    remoteUserVideoRef.current!.srcObject = stream;
+}
   
   return (
     <Container>
@@ -90,11 +89,10 @@ const currentUserVideoRef = useRef<HTMLVideoElement>(null);
         <Video ref={currentUserVideoRef} autoPlay muted></Video>
       </VideoContainer>
       <VideoContainer>
-        <p>{remoteUserVideoRef.current == null ? "Pas d'info": remoteUserVideoRef.current.currentSrc}</p>
-       <Video ref={remoteUserVideoRef} autoPlay muted></Video> 
+        <Video ref={remoteUserVideoRef} autoPlay muted></Video>
       </VideoContainer>
     </Container>
   );
 }
 
-export default App
+export default App;

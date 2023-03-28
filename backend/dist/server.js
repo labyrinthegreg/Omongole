@@ -8,9 +8,9 @@ app.use(cors());
 const io = new Server(server, { cors: { origin: '*' } });
 io.on('connection', (socket) => {
     console.log('a user connected');
-    socket.on('join-room', (userId) => {
+    socket.on('join-room', (userId, peerId) => {
         socket.join("lol");
-        socket.to("lol").emit('user-connected', userId);
+        socket.to("lol").emit('user-connected', userId, peerId);
     });
     socket.on('disconnect', () => {
         console.log('user disconnected');
