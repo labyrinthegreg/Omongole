@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'peerjs';
 import io from 'socket.io-client';
 import styled from 'styled-components';
-import { stringify } from 'querystring';
 
 const Container = styled.div`
   display: flex;
@@ -10,36 +9,15 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const VideoContainer = styled.div`
-  width: 640px;
-  height: 480px;
-`;
 
 const Video = styled.video`
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 
-const ControlsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 16px;
-`;
 
-const Button = styled.button`
-  margin: 0 8px;
-  padding: 8px 16px;
-  font-size: 16px;
-`;
-
-const Input = styled.input`
-  margin: 0 8px;
-  padding: 8px 16px;
-  font-size: 16px;
-  flex: 1;
-`;
-const socket = io('http://localhost:3000');
+const socket = io(import.meta.env.VITE_BACK_URL);
 
 function VideoChatRoom() {
   const currentUserVideoRef = useRef<HTMLVideoElement>(null);
@@ -47,8 +25,8 @@ function VideoChatRoom() {
 
   const peer = new Peer()
 
-  peer.on('open', () => {
-    socket.emit('join-room', socket.id);
+  peer.on('open', (id) => {
+    socket.emit('join-room', socket.id, id);
   })
   
   useEffect(() => {
@@ -60,6 +38,7 @@ function VideoChatRoom() {
       }
       peer.on('call', (call) => {
         call.answer(stream);
+        
         call.on('stream', (remoteStream: MediaStream) => {
           connectToNewUser(remoteStream);
         });
@@ -77,18 +56,17 @@ function VideoChatRoom() {
   }, []);
 
   function connectToNewUser(stream: MediaStream) {
-    remoteUserVideoRef.current.srcObject = stream;
+    remoteUserVideoRef.current!.srcObject = stream;
 }
   
   return (
     <Container>
-      <h1>Live Video Chat</h1>
-      <VideoContainer>
-        <Video ref={currentUserVideoRef} autoPlay muted></Video>
-      </VideoContainer>
-      <VideoContainer>
+      <div className="camRandomUser">
         <Video ref={remoteUserVideoRef} autoPlay muted></Video>
-      </VideoContainer>
+      </div>
+      <div className="camUser">
+        <Video ref={currentUserVideoRef} autoPlay muted></Video>
+      </div>
     </Container>
   );
 }
