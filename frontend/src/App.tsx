@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import styled from 'styled-components';
+import VideoChatRoom from './components/VideoChatRoom'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -7,8 +9,7 @@ function App() {
   return (
     <div className="App">
       <div className="container-video">
-        <div className="camRandomUser"></div>
-        <div className="camUser"></div>
+        <VideoChatRoom/>
         <div className="icon">
             <div className="stop">
               <img src="../src/assets/arret.svg" alt="" className="stopImage"/>
