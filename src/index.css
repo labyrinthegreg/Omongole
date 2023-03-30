@@ -5,8 +5,10 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  background-image: url(../src/assets/fond-accueil.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,56 +16,84 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+.container{
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  right: 20px;
+  left: 20px;
+  background-color: rgb(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
 }
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
+h1{
+  font-size: 5em;
   line-height: 1.1;
+  color: #c6e2ff;
+  text-shadow:
+          0 0 6px rgba(202,228,225,0.92),
+          0 0 30px rgba(202,228,225,0.34),
+          0 0 12px rgba(30,132,242,0.52),
+          0 0 21px rgba(30,132,242,0.92),
+          0 0 34px rgba(30,132,242,0.78),
+          0 0 54px rgba(30,132,242,0.92);
+}
+.containerContainerTags{
+  margin-top: 250px;
+  height: fit-content;
+
+}
+.containerTags{
+  display: flex;
+  flex-direction: row;
+  margin-top: 150px;
+}
+.yourTags{
+  width: 100%;
+}
+.separator{
+  border: 1px black solid;
+}
+.tags{
+  width: 100%;
+}
+.inputTag{
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 10px;
+  height: 30px;
+  width: 350px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+.containerButtonChat{
+  display: flex;
+  flex-direction: row;
+  margin-top: 150px;
 }
-button:hover {
-  border-color: #646cff;
+.chatVideo{
+  width: 100%;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.chat{
+  width: 100%;
 }
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button{
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  height: 50px;
+  width: 150px;
+  font-weight: 600;
+  font-size: large;
+}
+button:hover{
+  background-color: transparent;
+  box-shadow:
+          0 0 8px #fff,
+          inset 0 0 8px #fff,
+          0 0 12px #ffc6f7,
+          inset 0 0 12px #ffc6f7,
+          0 0 17px #ffc6f7,
+          inset 0 0 17px #ffc6f7;
 }
