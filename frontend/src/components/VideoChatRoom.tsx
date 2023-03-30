@@ -66,7 +66,6 @@ function VideoChatRoom() {
       });
 
       socket.on('user-connected', (userId: string) => { 
-        console.log("userId: ", userId);
         const call = peer.call(peer.id, stream)
         
         call.on('stream', (remoteStream: MediaStream) => {

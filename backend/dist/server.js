@@ -15,6 +15,9 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
+    socket.on('message', (message) => {
+        io.emit('message', message);
+    });
 });
 server.listen(3000, () => {
     console.log('listening on port:3000');
