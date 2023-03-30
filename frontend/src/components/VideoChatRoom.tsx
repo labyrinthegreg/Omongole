@@ -16,7 +16,8 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const socket = io(import.meta.env.BACK_URL);
+
+const socket = io(import.meta.env.VITE_BACK_URL);
 
 function VideoChatRoom() {
   const currentUserVideoRef = useRef<HTMLVideoElement>(null);
