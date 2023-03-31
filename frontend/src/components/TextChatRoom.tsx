@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
-import Peer from 'peerjs';
 
 export interface objectMessage {
     userId: string,
@@ -14,15 +12,13 @@ function TextChatRoom(props: any) {
   const [userId, setUserId] = useState<string>('');
   const socket = props.socket;
 
-  const peer = new Peer()
 
-  peer.on('open', () => {
+    useEffect(() => {
     setUserId(socket.id);
-  })
-
-  useEffect(() => {
-    socket.on('message', (messageToSend) => {
-    setMessagesInConv(messagesInConv => {
+      
+        socket.on('message', (messageToSend) => {
+            
+            setMessagesInConv(messagesInConv => {
         return [...messagesInConv, messageToSend]
     });
     
@@ -64,14 +60,14 @@ function TextChatRoom(props: any) {
                 )
             }
         })}
-        <form className='sendInput' action='#'>
-            <input className="inputMessage"
-                type="text"
-                autoComplete='off'
-                value={messageToSend}
-                onChange={(event) => setMessageToSend(event.target.value)}/>
+        <div className='sendInput'>
+              <input className="inputMessage"
+                  type="text"
+                  autoComplete='off'
+                  value={messageToSend}
+                  onChange={(event) => {setMessageToSend(event.target.value)}}/>
             <button onClick={sendMessage} className="sendIcon">ENVOYER</button>
-        </form>
+        </div>
     </div>
   );
 }; 

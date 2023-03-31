@@ -15,9 +15,7 @@ io.on('connection', (socket) => {
     });
     socket.on('skipping', () => {
         let userSkipping = usersConnected.find(user => user.userId === socket.id);
-        console.log(socket.rooms);
         socket.leave(userSkipping.roomId);
-        console.log(socket.rooms);
         console.log("user skipping");
         searchRoom(socket, true, userSkipping.userId, userSkipping.peerId, userSkipping.chatVideo, userSkipping.tag);
         socket.emit('user-skipped');
@@ -27,7 +25,10 @@ io.on('connection', (socket) => {
         usersConnected = usersConnected.filter(user => user.userId !== socket.id);
     });
     socket.on('message', (message) => {
-        io.emit('message', message);
+        var _a, _b;
+        let roomId = (_a = usersConnected.find(user => user.userId === socket.id)) === null || _a === void 0 ? void 0 : _a.roomId;
+        let receiveUserId = (_b = usersConnected.find(user => user.roomId === roomId && user.userId !== socket.id)) === null || _b === void 0 ? void 0 : _b.userId;
+        io.to(roomId).emit('message', message);
     });
 });
 function searchRoom(socket, isSkipping, userId, peerId, chatVideo, tag) {
@@ -74,12 +75,9 @@ function searchRoom(socket, isSkipping, userId, peerId, chatVideo, tag) {
             foundOne = true;
         }
     }
-    console.log(usersTagged);
     let userConnectedIndex = usersConnected.findIndex(user => user.userId === userId);
     usersConnected[userConnectedIndex].roomId = roomId;
     usersConnected[userConnectedIndex].alone = !foundOne;
-    console.log(usersConnected);
-    console.log(roomId);
     socket.join(roomId);
     socket.to(roomId).emit('user-connected', userId, peerId);
 }

@@ -22,15 +22,14 @@ const io = new Server(server, {cors: {origin: '*'}});
 
 io.on('connection', (socket: Socket) => {
   console.log("user connected");
-  socket.on('join-room', (userId: string, peerId: string, chatVideo: boolean, tag: string | undefined) => { 
+  socket.on('join-room', (userId: string, peerId: string, chatVideo: boolean, tag: string | undefined) => {
+    
     searchRoom(socket, false, userId, peerId, chatVideo, tag);
   })
 
   socket.on('skipping', () => { 
     let userSkipping = usersConnected.find(user => user.userId === socket.id);
-    console.log(socket.rooms);
     socket.leave(userSkipping!.roomId)
-    console.log(socket.rooms);
     console.log("user skipping");
     
     searchRoom(socket, true, userSkipping!.userId, userSkipping!.peerId, userSkipping!.chatVideo, userSkipping!.tag);
@@ -42,8 +41,10 @@ io.on('connection', (socket: Socket) => {
     usersConnected = usersConnected.filter(user => user.userId !== socket.id);
     
   })
-  socket.on('message', (message: string) => {
-    io.emit('message', message)
+  socket.on('message', (message: any) => {
+    let roomId: string = usersConnected.find(user => user.userId === socket.id)?.roomId!;
+    let receiveUserId: string = usersConnected.find(user => user.roomId === roomId && user.userId !== socket.id)?.userId!;
+    io.to(roomId).emit('message', message);
   })
 });
 
@@ -90,16 +91,11 @@ function searchRoom(socket: Socket, isSkipping: boolean, userId: string, peerId:
         foundOne = true;
       }
     }
-  console.log(usersTagged);
   
   
     let userConnectedIndex = usersConnected.findIndex(user => user.userId === userId)
     usersConnected[userConnectedIndex].roomId = roomId;
-  usersConnected[userConnectedIndex].alone = !foundOne;
-  console.log(usersConnected);
-
-  console.log(roomId);
-  
+    usersConnected[userConnectedIndex].alone = !foundOne; 
     socket.join(roomId);
     socket.to(roomId).emit('user-connected', userId, peerId);
 }

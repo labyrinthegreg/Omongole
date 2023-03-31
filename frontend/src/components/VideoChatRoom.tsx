@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'peerjs';
-import io from 'socket.io-client';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -27,11 +26,10 @@ function VideoChatRoom(props: any) {
   const peer = new Peer()
 
   peer.on('open', (id) => {
-    socket.emit('join-room', socket.id, id, true);
+    socket.emit('join-room', socket.id, id, props.videoChat, props.tag);
   })
   
   useEffect(() => {
-
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
       
       if (currentUserVideoRef.current) {
@@ -45,8 +43,8 @@ function VideoChatRoom(props: any) {
         });
       });
 
-      socket.on('user-connected', (userId: string) => { 
-        const call = peer.call(peer.id, stream)
+      socket.on('user-connected', (userId: string, peerId: string) => { 
+        const call = peer.call(peerId, stream)
         
         call.on('stream', (remoteStream: MediaStream) => {
           connectToNewUser(remoteStream);
@@ -60,6 +58,8 @@ function VideoChatRoom(props: any) {
   }, []);
 
   function connectToNewUser(stream: MediaStream) {
+    console.log(stream);
+    
     remoteUserVideoRef.current!.srcObject = stream;
 }
   
