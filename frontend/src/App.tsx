@@ -1,21 +1,23 @@
-import { useState } from 'react'
 import './App.css'
-import styled from 'styled-components';
 import VideoChatRoom from './components/VideoChatRoom'
+import io, { Socket } from 'socket.io-client';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const socket = io(import.meta.env.VITE_BACK_URL)
+  
 
   return (
     <div className="App">
       <div className="container-video">
-        <VideoChatRoom/>
+        <VideoChatRoom socket={socket}/>
         <div className="icon">
             <div className="stop">
               <img src="../src/assets/arret.svg" alt="" className="stopImage"/>
             </div>
-            <div className="next">
-              <img src="../src/assets/vers-lavant.svg" alt="" className="nextImage"/>
+          <div className="next">
+            <button onClick={()=>Skipping(socket)}><img src="../src/assets/vers-lavant.svg" alt="" className="nextImage"/></button>
+              
             </div>
           </div>
       </div>
@@ -31,6 +33,10 @@ function App() {
       </div>
     </div>
   )
+}
+
+function Skipping(socket: Socket) { 
+  socket.emit('skipping')
 }
 
 export default App

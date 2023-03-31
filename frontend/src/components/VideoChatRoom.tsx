@@ -17,16 +17,17 @@ const Video = styled.video`
 `;
 
 
-const socket = io(import.meta.env.VITE_BACK_URL);
 
-function VideoChatRoom() {
+function VideoChatRoom(props: any) {
+  const socket = props.socket;
+
   const currentUserVideoRef = useRef<HTMLVideoElement>(null);
   const remoteUserVideoRef = useRef<HTMLVideoElement>(null);
 
   const peer = new Peer()
 
   peer.on('open', (id) => {
-    socket.emit('join-room', socket.id, id);
+    socket.emit('join-room', socket.id, id, true);
   })
   
   useEffect(() => {
@@ -52,6 +53,9 @@ function VideoChatRoom() {
           connectToNewUser(remoteStream);
         });
       });
+      socket.on('user-skipped', () => {
+        remoteUserVideoRef.current!.srcObject = null;
+      })
     })
 
   }, []);
