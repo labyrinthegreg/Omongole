@@ -2,9 +2,10 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
+import { Link } from 'react-router-dom'
 
 function Home() {
+
 
     const [value, setValue] = useState("");
     const [tags, setTags] = useState<string[]>([]);
@@ -50,13 +51,18 @@ function Home() {
                         <input type="text" id="myTag" name="myTag" onKeyPress={handleKeyPress} onChange={e => setValue(e.target.value)} value={value}/>
                     </div>
                 </div>
-                <div className= "container_button">
-                    <button className="button_container">
+                <div className="container_button">
+                    <Link to={'/chatvideo'} >
+                        <button className="button_container">
                         <p className="button_text">CHAT VIDEO</p>
                     </button>
-                    <button className="button_container">
+                    </Link>
+                    <Link to={'/chatonly'}>
+                        <button className="button_container">
                         <p className="button_text">CHAT ONLY</p>
                     </button>
+                    </Link>
+                    
                 </div>
             </div>
         </div>
