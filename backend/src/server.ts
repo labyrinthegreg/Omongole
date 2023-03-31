@@ -43,7 +43,6 @@ io.on('connection', (socket: Socket) => {
   })
   socket.on('message', (message: any) => {
     let roomId: string = usersConnected.find(user => user.userId === socket.id)?.roomId!;
-    let receiveUserId: string = usersConnected.find(user => user.roomId === roomId && user.userId !== socket.id)?.userId!;
     io.to(roomId).emit('message', message);
   })
 });
@@ -53,6 +52,7 @@ function searchRoom(socket: Socket, isSkipping: boolean, userId: string, peerId:
   let randomNumber: number = 0;
   let usersTagged: user[] = [];
   let foundOne: boolean = false;
+  let userJoined;
 
   if (isSkipping) {
     let userRoomId: string | undefined = usersConnected.find(user => user.userId === socket.id)?.roomId;
@@ -75,6 +75,8 @@ function searchRoom(socket: Socket, isSkipping: boolean, userId: string, peerId:
     // If there is at least one person with the same tag and that is alone
       randomNumber = Math.floor(Math.random() * usersTagged.length);
       roomId = usersTagged[randomNumber].roomId;
+      userJoined = usersTagged[randomNumber];
+      
       usersConnected[usersConnected.findIndex(user => user.userId === usersTagged[randomNumber].userId)].alone = false;
       foundOne = true;
     } else {
@@ -95,7 +97,9 @@ function searchRoom(socket: Socket, isSkipping: boolean, userId: string, peerId:
   
     let userConnectedIndex = usersConnected.findIndex(user => user.userId === userId)
     usersConnected[userConnectedIndex].roomId = roomId;
-    usersConnected[userConnectedIndex].alone = !foundOne; 
+  usersConnected[userConnectedIndex].alone = !foundOne; 
+  console.log("user joined room: " + roomId + " with " + userJoined?.roomId);
+  
     socket.join(roomId);
     socket.to(roomId).emit('user-connected', userId, peerId);
 }

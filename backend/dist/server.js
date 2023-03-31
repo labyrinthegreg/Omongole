@@ -25,9 +25,8 @@ io.on('connection', (socket) => {
         usersConnected = usersConnected.filter(user => user.userId !== socket.id);
     });
     socket.on('message', (message) => {
-        var _a, _b;
+        var _a;
         let roomId = (_a = usersConnected.find(user => user.userId === socket.id)) === null || _a === void 0 ? void 0 : _a.roomId;
-        let receiveUserId = (_b = usersConnected.find(user => user.roomId === roomId && user.userId !== socket.id)) === null || _b === void 0 ? void 0 : _b.userId;
         io.to(roomId).emit('message', message);
     });
 });
@@ -37,6 +36,7 @@ function searchRoom(socket, isSkipping, userId, peerId, chatVideo, tag) {
     let randomNumber = 0;
     let usersTagged = [];
     let foundOne = false;
+    let userJoined;
     if (isSkipping) {
         let userRoomId = (_a = usersConnected.find(user => user.userId === socket.id)) === null || _a === void 0 ? void 0 : _a.roomId;
         usersConnected[usersConnected.findIndex(user => user.userId === socket.id)].alone = true;
@@ -57,6 +57,7 @@ function searchRoom(socket, isSkipping, userId, peerId, chatVideo, tag) {
         // If there is at least one person with the same tag and that is alone
         randomNumber = Math.floor(Math.random() * usersTagged.length);
         roomId = usersTagged[randomNumber].roomId;
+        userJoined = usersTagged[randomNumber];
         usersConnected[usersConnected.findIndex(user => user.userId === usersTagged[randomNumber].userId)].alone = false;
         foundOne = true;
     }
@@ -78,6 +79,7 @@ function searchRoom(socket, isSkipping, userId, peerId, chatVideo, tag) {
     let userConnectedIndex = usersConnected.findIndex(user => user.userId === userId);
     usersConnected[userConnectedIndex].roomId = roomId;
     usersConnected[userConnectedIndex].alone = !foundOne;
+    console.log("user joined room: " + roomId + " with " + (userJoined === null || userJoined === void 0 ? void 0 : userJoined.roomId));
     socket.join(roomId);
     socket.to(roomId).emit('user-connected', userId, peerId);
 }
