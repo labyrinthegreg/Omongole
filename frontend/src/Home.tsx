@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -8,19 +8,22 @@ function Home() {
 
 
     const [value, setValue] = useState("");
-    const [tags, setTags] = useState<string[]>([]);
+    const [tag, setTag] = useState<string>("");
 
     function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter") {
             if (value !== "") {
-                setTags(tags => [value])
+                setTag(value)
                 setValue("")
             } else {
-                setTags([value])
+                setTag(value)
             }
         }
     }
-
+    useEffect(() => {
+      localStorage.setItem('tag', tag)
+    }, [tag])
+    
 
 
     return (
@@ -37,9 +40,9 @@ function Home() {
                             YOUR TAG
                         </p>
                         <p>
-                            {tags.map(tag => {return(<span className="tags">{tag}</span>)})}
+                            {<span className="tags">{tag}</span>}
                         </p>
-                        <button className="button_reset_container" onClick={() => setTags(tags => [])}>
+                        <button className="button_reset_container" onClick={() => setTag(tag => "")}>
                             <p className="button_reset"> RESET TAG</p>
                         </button>
                     </div>

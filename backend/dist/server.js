@@ -15,9 +15,9 @@ io.on('connection', (socket) => {
     });
     socket.on('skipping', () => {
         let userSkipping = usersConnected.find(user => user.userId === socket.id);
+        searchRoom(socket, true, userSkipping.userId, userSkipping.peerId, userSkipping.chatVideo, userSkipping.tag);
         socket.leave(userSkipping.roomId);
         console.log("user skipping");
-        searchRoom(socket, true, userSkipping.userId, userSkipping.peerId, userSkipping.chatVideo, userSkipping.tag);
         socket.emit('user-skipped');
     });
     socket.on('disconnect', () => {
@@ -40,8 +40,11 @@ function searchRoom(socket, isSkipping, userId, peerId, chatVideo, tag) {
     if (isSkipping) {
         let userRoomId = (_a = usersConnected.find(user => user.userId === socket.id)) === null || _a === void 0 ? void 0 : _a.roomId;
         usersConnected[usersConnected.findIndex(user => user.userId === socket.id)].alone = true;
-        usersConnected[usersConnected.findIndex(user => user.userId === socket.id)].roomId = Date.now().toString();
-        usersConnected[usersConnected.findIndex(user => user.userId !== socket.id && user.roomId === userRoomId)].alone = true;
+        usersConnected[usersConnected.findIndex(user => user.userId === socket.id)].roomId = roomId;
+        if (usersConnected[usersConnected.findIndex(user => user.userId !== socket.id && user.roomId === userRoomId)] !== undefined) {
+            usersConnected[usersConnected.findIndex(user => user.userId !== socket.id && user.roomId === userRoomId)].alone = true;
+            io.to(userRoomId).emit('user-disconnected');
+        }
     }
     else if (!usersConnected.find(user => user.userId === userId)) {
         usersConnected.push({ userId, peerId, roomId, chatVideo: chatVideo, tag: tag, alone: true });

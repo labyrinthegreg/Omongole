@@ -26,7 +26,7 @@ function VideoChatRoom(props: any) {
   const peer = new Peer()
 
   peer.on('open', (id) => {
-    socket.emit('join-room', socket.id, id, props.videoChat, props.tag);
+    socket.emit('join-room', socket.id, id, props.videoChat, localStorage.getItem('tag'));
   })
   
   useEffect(() => {
@@ -51,7 +51,8 @@ function VideoChatRoom(props: any) {
         });
       });
       socket.on('user-skipped', () => {
-        remoteUserVideoRef.current!.srcObject = null;
+        peer.call(null, stream)
+        // remoteUserVideoRef.current!.srcObject = null;
       })
     })
 
