@@ -136,12 +136,15 @@ button:focus-visible {
   display: flex;
     flex-direction: column;
     align-items: end;
+    word-wrap: break-word;
+
 }
 
 .messageReceived {
   display: flex;
     flex-direction: column;
     align-items: start;
+    word-wrap: break-word;
 }
 
 .sendInput{
