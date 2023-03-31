@@ -1,12 +1,11 @@
 import './App.css'
 import VideoChatRoom from './components/VideoChatRoom'
+import TextChatRoom from './components/TextChatRoom';
 import io, { Socket } from 'socket.io-client';
 
 
 function App() {
   const socket = io(import.meta.env.VITE_BACK_URL)
-  
-
   return (
     <div className="App">
       <div className="container-video">
@@ -22,14 +21,7 @@ function App() {
           </div>
       </div>
       <div className="container-chat">
-        <div className="chatBubbleReceived"></div>
-        <div className="chatBubbleSend"></div>
-        <div className='sendInput'>
-          <form action="post">
-            <input type="text" className="inputMessage"/>
-            <input type="image" src="../src/assets/avion-en-papier.svg" className="sendIcon"/>
-          </form>
-        </div>
+        <TextChatRoom socket={socket}/>
       </div>
     </div>
   )

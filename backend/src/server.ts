@@ -42,6 +42,9 @@ io.on('connection', (socket: Socket) => {
     usersConnected = usersConnected.filter(user => user.userId !== socket.id);
     
   })
+  socket.on('message', (message: string) => {
+    io.emit('message', message)
+  })
 });
 
 function searchRoom(socket: Socket, isSkipping: boolean, userId: string, peerId: string, chatVideo: boolean, tag: string | undefined) {

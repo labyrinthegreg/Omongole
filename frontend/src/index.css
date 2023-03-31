@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  /* background-image: url(../src/assets/chat.gif); */
+  background-image: url(../src/assets/chat.gif);
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -98,25 +98,57 @@ button:focus-visible {
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
 }
+
+.container-only-chat{
+  border-radius: 10px;
+  padding: 10px;
+  width: 75%;
+  height: 1065px;
+  background-color: rgb(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+
 .chatBubbleReceived{
   width: 40%;
   height: 4%; /* a mettre en fil-content */
+  padding: 10px;
   background-color: gray;
   border-radius: 10px;
+  margin-bottom: 0;
+  margin-top: 0;
+
 }
 .chatBubbleSend{
   width: 40%;
   height: 4%; /* a mettre en fil-content */
   background-color: gray;
-  position: absolute;
-  right: 10px;
+  padding: 10px;
   border-radius: 10px;
+  margin-bottom: 0;
+  margin-top: 0;
 }
+.messageTime {
+  color: rgb(227, 219, 219);
+}
+
+.messageSend {
+  display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.messageReceived {
+  display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
 .sendInput{
   display: flex;
   flex-direction: row;
   width: 100%;
-  margin-bottom: 7px;
+  margin-bottom: 12px;
   position: fixed;
   bottom: 0;
 }
@@ -125,11 +157,13 @@ button:focus-visible {
   background-color: rgb(255, 255, 255, 0.6);
   border-radius: 20px;
   padding: 10px;
-  width: 57vh;
+  width: 75%;
+  color: black;
+  font-weight: 900;
+  font-size: large;
 }
 .sendIcon{
-  width: 25px;
-  position: absolute;
-  margin-top: 5px;
-  margin-left: 5px;
+  margin-left: 1%;
+  width: 17%;
+  font-weight: bolder;
 }

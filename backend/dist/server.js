@@ -26,6 +26,9 @@ io.on('connection', (socket) => {
         console.log('user disconnected');
         usersConnected = usersConnected.filter(user => user.userId !== socket.id);
     });
+    socket.on('message', (message) => {
+        io.emit('message', message);
+    });
 });
 function searchRoom(socket, isSkipping, userId, peerId, chatVideo, tag) {
     var _a;
