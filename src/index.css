@@ -1,0 +1,174 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  background-image: url(../src/assets/fond-accueil.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+
+
+
+.container_blur {
+  background-color: rgb(255, 255, 255, 0.3);
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+
+.omongole {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 5em;
+  line-height: 1.1;
+  color: #c6e2ff;
+  text-shadow:
+          0 0 6px rgba(202,228,225,0.92),
+          0 0 30px rgba(202,228,225,0.34),
+          0 0 12px rgba(30,132,242,0.52),
+          0 0 21px rgba(30,132,242,0.92),
+          0 0 34px rgba(30,132,242,0.78),
+          0 0 54px rgba(30,132,242,0.92);
+}
+
+.container_tag{
+  align-items: stretch;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+
+input{
+  background: transparent;
+  border: #1a1a1a;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 20px;
+  width: 50%;
+  padding: 1.5%;
+
+}
+
+.container_tags{
+  text-align: center;
+  width: 100%;
+}
+
+.tags{
+  text-align: center;
+  border-radius: 8px;
+  border: 2px black solid;
+  padding: 3px;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  min-height: 10%;
+}
+
+.button_reset_container {
+  border-radius: 8px;
+  border: 2px black solid;
+  font-size: 1em;
+  font-weight: bolder;
+  font-family: inherit;
+  background-color: transparent;
+  margin-top: 10%;
+
+}
+
+.button_reset{
+  font-weight: 500;
+  color: white;
+  text-decoration: inherit;
+  text-shadow:
+          0 0 6px rgba(202,228,225,0.92),
+          0 0 34px rgba(30,132,242,0.78),
+          0 0 54px rgba(30,132,242,0.92);
+}
+
+.separator{
+  border: 1px black solid;
+}
+
+
+.container_enter_tag{
+  text-align: center;
+  width: 100%;
+}
+
+.title{
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+
+
+.container_button{
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  text-align: center;
+}
+
+
+.button_container {
+  border-radius: 8px;
+  border: 2px black solid;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: bolder;
+  font-family: inherit;
+  background-color: transparent;
+  width: 25%;
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-top: 10%;
+  background-image : url(../src/assets/jouer.svg);
+  background-repeat : no-repeat;
+  background-size: 20%;
+  background-position : 90% 50%;
+  vertical-align : middle;
+  text-align : left;
+
+}
+
+.button_text {
+  font-weight: 500;
+  color: white;
+  text-decoration: inherit;
+  text-shadow:
+          0 0 6px rgba(202,228,225,0.92),
+          0 0 34px rgba(30,132,242,0.78),
+          0 0 54px rgba(30,132,242,0.92);
+}
+
+button:hover {
+  box-shadow:
+          0 0 8px #fff,
+          inset 0 0 8px #fff,
+          0 0 12px #ffc6f7,
+          inset 0 0 12px #ffc6f7,
+          0 0 17px #ffc6f7,
+          inset 0 0 17px #ffc6f7;
+  border: none;
+}
