@@ -54,11 +54,9 @@ function Home() {
                     <button className="button_container">
                         <p className="button_text">CHAT VIDEO</p>
                     </button>
-                    <a href="chat_only_page.tsx">
-                        <button className="button_container">
-                            <p className="button_text">CHAT ONLY</p>
-                        </button>
-                    </a>
+                    <button className="button_container">
+                        <p className="button_text">CHAT ONLY</p>
+                    </button>
                 </div>
             </div>
         </div>
