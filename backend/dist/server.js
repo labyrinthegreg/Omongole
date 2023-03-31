@@ -41,8 +41,7 @@ function searchRoom(socket, isSkipping, userId, peerId, chatVideo, tag) {
         let userRoomId = (_a = usersConnected.find(user => user.userId === socket.id)) === null || _a === void 0 ? void 0 : _a.roomId;
         usersConnected[usersConnected.findIndex(user => user.userId === socket.id)].alone = true;
         usersConnected[usersConnected.findIndex(user => user.userId === socket.id)].roomId = Date.now().toString();
-        let skippedUser = usersConnected[usersConnected.findIndex(user => user.userId !== socket.id && user.roomId === userRoomId)].userId;
-        usersConnected[usersConnected.findIndex(user => user.userId === skippedUser)].alone = true;
+        usersConnected[usersConnected.findIndex(user => user.userId !== socket.id && user.roomId === userRoomId)].alone = true;
     }
     else if (!usersConnected.find(user => user.userId === userId)) {
         usersConnected.push({ userId, peerId, roomId, chatVideo: chatVideo, tag: tag, alone: true });

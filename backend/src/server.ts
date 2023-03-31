@@ -59,8 +59,7 @@ function searchRoom(socket: Socket, isSkipping: boolean, userId: string, peerId:
     usersConnected[usersConnected.findIndex(user => user.userId === socket.id)].alone = true;
     usersConnected[usersConnected.findIndex(user => user.userId === socket.id)].roomId = Date.now().toString();
 
-    let skippedUser: string | undefined = usersConnected[usersConnected.findIndex(user => user.userId !== socket.id && user.roomId === userRoomId)].userId;
-    usersConnected[usersConnected.findIndex(user => user.userId === skippedUser)].alone = true;
+    usersConnected[usersConnected.findIndex(user => user.userId !== socket.id && user.roomId === userRoomId)].alone = true;
   } else if (!usersConnected.find(user => user.userId === userId)) {
     usersConnected.push({ userId, peerId, roomId , chatVideo: chatVideo, tag: tag, alone: true});
   } 

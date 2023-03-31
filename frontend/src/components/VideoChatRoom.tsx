@@ -66,7 +66,7 @@ function VideoChatRoom(props: any) {
   return (
     <Container>
       <div className="camRandomUser">
-        <Video ref={remoteUserVideoRef} autoPlay muted></Video>
+        <Video ref={remoteUserVideoRef} autoPlay></Video>
       </div>
       <div className="camUser">
         <Video ref={currentUserVideoRef} autoPlay muted></Video>
